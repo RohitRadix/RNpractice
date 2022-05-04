@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 
 import {
   StyleSheet,
@@ -6,49 +6,71 @@ import {
   Text,
   Button,
 } from 'react-native';
-// Undestanding Styles and styelsSheet
+// Undestanding Responsive UI and flexbox
 const App = () => {
-  const onClickHandler=() =>{
-   setName('Styling done ✅')
-  }
-  // Make a hook and give it a relavent name and default value if required
-  const [name, setName]= useState("Style ")
   return (
-    // we can write style in line too but its a good practice to define style in Stylesheet 
-   <View style={styles.body}>
-     <Text style={styles.text}>{name}</Text>
-     {/* We cannnot add style to Button directly as it dosent accepts it so we will wrap it in View */}
-     <View style={styles.button}>
-        <Button color={'#008000'}  onPress={onClickHandler} title='Mark Done'></Button>
-     </View>
-   </View>
+    <View style={styles.body}>
+      <View style={styles.view1}>
+        <Text style={styles.text}>1</Text>
+      </View>
+      <View style={styles.view2}>
+        <Text style={styles.text}>2</Text>
+      </View>
+      <View style={styles.view3}>
+        <Text style={styles.text}>3</Text>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  body:{
+  body: {
+    // Flex 1 spreads the view to whole area
     flex: 1,
-    backgroundColor: '#fad6a5',
+    // Default flex direction is col
+    // flexDirection:"column",
+    // flex direction is col reverse , it reverses the order of items
+    // flexDirection:"column-reverse",
+    // flex direction set to row 
+    // flexDirection:"row",
+    // flex direction set to row reverse
+    // flexDirection:"row-reverse",
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    // borderWidth: 5,
+    // borderColor: 'grey',
+
+
+  },
+  text: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: 'black'
+  },
+  view1: {
+
+    // width: 100,
+    // height: 100,
+    flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 5,
-    margin:25,
-    borderColor:'grey',
-
-    
+    backgroundColor: '#fad6a5',
   },
-  text:{
-    color:'black',
-    fontSize: 40,
-    fontStyle:'italic',
-    fontWeight:'600',
-    margin: 10,
+  view2: {
+    flex: 2,
+    // width: 100,
+    // height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#faa6a5',
   },
-  // cannot do much directly to Button instead we will use TouchableOpacity etc in later stages
-  button:{
-    width: 250,
-    height: 60
-    
+  view3: {
+    flex:1,
+    // width: 100,
+    // height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#faf6a5',
   }
 });
 
