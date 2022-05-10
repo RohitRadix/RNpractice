@@ -4,12 +4,11 @@ import {
   StyleSheet,
   View,
   Text,
-  ScrollView,
-  RefreshControl,
   TextInput,
   Button,
   TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight,
+  Alert, ToastAndroid
 } from 'react-native';
 //Using List ScrollView and Seeing how to ctrl refresh
 const App = () => {
@@ -19,7 +18,24 @@ const App = () => {
   let [submitted, setSubmitted] = useState(false)
   //Logic to toggle submitted props
   const submit = () => {
-    setSubmitted(!submitted)
+    if (name.length > 3)
+      setSubmitted(!submitted)
+    else {
+      //********* Alert **********//
+      // Alert.alert('Title', 'This is the body',
+      //   [
+      //     { text: 'Button 1', onPress: () => console.warn('Button 1 pressed') },
+      //     { text: 'Button 2', onPress: () => console.warn('Button 2 pressed') },
+      //     { text: 'Button 3', onPress: () => console.warn('Button 3 pressed') },
+      //   ], /*By default alert is not cancellable by pressing on empty area so we use cancelable*/
+      //   { cancelable: true, onDismiss: () => console.warn('Alert dismissed') }
+      // )
+      //********* Toast **********//
+      ToastAndroid.show('THis is a toast',
+        ToastAndroid.LONG
+      )
+
+    }
 
   }
   return (
