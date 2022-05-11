@@ -8,38 +8,54 @@ import {
   Button,
   TouchableOpacity,
   TouchableHighlight,
-  Alert, ToastAndroid
+  Alert, ToastAndroid, Modal, Pressable
 } from 'react-native';
+
 //Using List ScrollView and Seeing how to ctrl refresh
 const App = () => {
 
   const [name, setName] = useState('')
   const [age, setAge] = useState()
+  const [showWarning, setShowWarning] = useState(false)
   let [submitted, setSubmitted] = useState(false)
   //Logic to toggle submitted props
   const submit = () => {
     if (name.length > 3)
       setSubmitted(!submitted)
     else {
-      //********* Alert **********//
-      // Alert.alert('Title', 'This is the body',
-      //   [
-      //     { text: 'Button 1', onPress: () => console.warn('Button 1 pressed') },
-      //     { text: 'Button 2', onPress: () => console.warn('Button 2 pressed') },
-      //     { text: 'Button 3', onPress: () => console.warn('Button 3 pressed') },
-      //   ], /*By default alert is not cancellable by pressing on empty area so we use cancelable*/
-      //   { cancelable: true, onDismiss: () => console.warn('Alert dismissed') }
-      // )
-      //********* Toast **********//
-      ToastAndroid.show('THis is a toast',
-        ToastAndroid.LONG
-      )
-
+      setShowWarning(true)
     }
 
   }
   return (
     <View style={styles.body}>
+      <Modal
+        visible={showWarning}
+        onRequestClose={() =>
+          setShowWarning(false)
+        }
+        transparent
+        animationType='fade'
+
+      >
+        <View style={styles.center}>
+          <View style={styles.modal_warning}>
+            <View style={styles.modal_title}>
+              <Text style={styles.subTexttext}>Warning</Text>
+            </View>
+            <View style={styles.warning_body}>
+              <Text>Please enter atleast 3 characters</Text>
+            </View>
+            <View style={styles.warning_button}>
+              <Pressable onPress={() => { setShowWarning(false) }}
+                android_ripple={'#fda'}
+              >
+                <Text>OK</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal >
       <Text style={styles.text}>Enter your name</Text>
       <TextInput
         style={styles.input}
@@ -88,7 +104,7 @@ const App = () => {
         submitted === true &&
         <Text style={styles.subText}>Your name is {name} and you are {age} years old </Text>
       }
-    </View>
+    </View >
   );
 };
 
@@ -104,8 +120,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
-    margin: 10
-
+    margin: 10,
   },
   subText: {
     fontSize: 15,
@@ -129,8 +144,45 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 20,
   },
+  modal_warning: {
+    height: 150,
+    width: 300,
+    backgroundColor: '#ffff',
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00000090'
+  },
+  modal_title: {
+    backgroundColor: 'yellow',
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    height: 35,
+    justifyContent: 'center',
+    alignItems: 'center'
 
 
+  },
+  warning_body: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  warning_button: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fddd',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+
+
+
+  }
 });
 
 export default App;
