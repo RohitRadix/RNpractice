@@ -8,76 +8,33 @@ import {
   Button,
   TouchableOpacity,
   TouchableHighlight,
-  Alert, ToastAndroid, Modal, Pressable
+  Alert, ToastAndroid, Modal, Pressable, Image, ImageBackground
 } from 'react-native';
 
-//Using List ScrollView and Seeing how to ctrl refresh
 const App = () => {
 
   const [name, setName] = useState('')
   const [age, setAge] = useState()
-  const [showWarning, setShowWarning] = useState(false)
   let [submitted, setSubmitted] = useState(false)
   //Logic to toggle submitted props
   const submit = () => {
     if (name.length > 3)
       setSubmitted(!submitted)
     else {
-      setShowWarning(true)
+      setSubmitted(false)
     }
 
   }
   return (
-    <View style={styles.body}>
-      <Modal
-        visible={showWarning}
-        onRequestClose={() =>
-          setShowWarning(false)
-        }
-        transparent
-        animationType='fade'
-
-      >
-        <View style={styles.center}>
-          <View style={styles.modal_warning}>
-            <View style={styles.modal_title}>
-              <Text style={styles.subTexttext}>Warning</Text>
-            </View>
-            <View style={styles.warning_body}>
-              <Text>Please enter atleast 3 characters</Text>
-            </View>
-            <View style={styles.warning_button}>
-              <Pressable onPress={() => { setShowWarning(false) }}
-                android_ripple={'#fda'}
-              >
-                <Text>OK</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal >
+    <ImageBackground
+      style={styles.body}
+      source={{ uri: 'https://cdn.pixabay.com/photo/2016/11/05/12/38/fuzzy-1800136_960_720.jpg' }}
+    >
       <Text style={styles.text}>Enter your name</Text>
       <TextInput
         style={styles.input}
         placeholder='e.g. Rohit'
         onChangeText={(value) => { setName(value) }}
-      />
-      <Text style={styles.text}>Enter your age</Text>
-      <TextInput
-        keyboardType='numeric'
-        style={styles.input}
-        placeholder='e.g. 20'
-        // secureTextEntry //for password fields
-        onChangeText={(val) => {
-          setAge(val)
-        }}
-      />
-      {/* Button title will change acc. to the state  */}
-      <Button title={submitted ? 'Clear' : 'Submit'}
-        onPress={submit}
-        // The button will be disabled after it is clicked
-        // disabled={submitted}
-        color='#000'
       />
 
       {/* Since Button has very limited props we eill use othe alt  */}
@@ -85,26 +42,23 @@ const App = () => {
         style={styles.button}
         onPress={submit}
       >
-        <Text style={styles.subText}>{submitted ? 'Touchable Clear' : 'Touchable Submit'}</Text>
+        <Text style={styles.button_text}>{submitted ? 'Clear' : 'Submit'}</Text>
       </TouchableOpacity>
-
-      {/* We will use touchable heighlight as we can give a color when it is clicked */}
-      <TouchableHighlight
-        style={styles.button}
-        onPress={submit}
-        //This color is shown when button is clicked
-        underlayColor='#fcf'
-      >
-        <Text style={styles.subText}>{submitted ? 'TouchableHighlight Clear' : 'TouchableHighlight Submit'}</Text>
-      </TouchableHighlight>
-
 
       {/* This statement will only appear when button is pressed */}
       {
-        submitted === true &&
-        <Text style={styles.subText}>Your name is {name} and you are {age} years old </Text>
+        submitted === true ?
+          <>
+            <Text style={styles.subText}>You are verified as {name} </Text>
+            <Image style={styles.image} source={{ uri: 'https://cdn.pixabay.com/photo/2012/04/18/19/01/check-37583_960_720.png' }} />
+          </>
+          :
+          <>
+            <Text style={styles.subText}>Please enter atlest 3 characters</Text>
+            <Image style={styles.image} source={require('./assets/oops.png')} />
+          </>
       }
-    </View >
+    </ImageBackground >
   );
 };
 
@@ -112,7 +66,6 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center'
 
@@ -121,6 +74,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 25,
     margin: 10,
+    color: 'black'
   },
   subText: {
     fontSize: 15,
@@ -130,7 +84,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: 'black',
     borderRadius: 5,
     width: 260,
     fontSize: 20,
@@ -139,17 +93,18 @@ const styles = StyleSheet.create({
 
   },
   button: {
-    backgroundColor: 'grey',
+    backgroundColor: '#000',
     borderColor: 'black',
     borderRadius: 5,
     marginTop: 20,
+    width: 100
   },
-  modal_warning: {
-    height: 150,
-    width: 300,
-    backgroundColor: '#ffff',
-    borderWidth: 1,
-    borderRadius: 10,
+  button_text: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 15,
+    margin: 10,
+    textAlign: 'center'
   },
   center: {
     flex: 1,
@@ -157,32 +112,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#00000090'
   },
-  modal_title: {
-    backgroundColor: 'yellow',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    height: 35,
-    justifyContent: 'center',
-    alignItems: 'center'
-
-
+  image: {
+    height: 100,
+    width: 100,
+    marginTop: 20,
   },
-  warning_body: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  warning_button: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fddd',
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-
-
-
-  }
 });
 
 export default App;
