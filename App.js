@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
   Alert, ToastAndroid, Modal, Pressable, Image, ImageBackground
 } from 'react-native';
+import CustomButton from './Components/CustomButton';
 
 const App = () => {
 
@@ -36,16 +37,17 @@ const App = () => {
         placeholder='e.g. Rohit'
         onChangeText={(value) => { setName(value) }}
       />
+      <CustomButton submit={submit}
+        title={submitted ? 'Clear' : 'Submit'} />
 
       {/* Since Button has very limited props we eill use othe alt  */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={submit}
       >
         <Text style={styles.button_text}>{submitted ? 'Clear' : 'Submit'}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      {/* This statement will only appear when button is pressed */}
       {
         submitted === true ?
           <>
@@ -68,8 +70,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
-
-
   },
   text: {
     fontSize: 25,
@@ -92,20 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 26,
 
   },
-  button: {
-    backgroundColor: '#000',
-    borderColor: 'black',
-    borderRadius: 5,
-    marginTop: 20,
-    width: 100
-  },
-  button_text: {
-    fontWeight: 'bold',
-    color: 'white',
-    fontSize: 15,
-    margin: 10,
-    textAlign: 'center'
-  },
+
   center: {
     flex: 1,
     justifyContent: 'center',
