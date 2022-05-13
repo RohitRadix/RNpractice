@@ -1,66 +1,42 @@
 import React, { useState } from 'react';
-
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
 import {
   StyleSheet,
   View,
   Text,
   TextInput,
-  Button,
-  TouchableOpacity,
-  TouchableHighlight,
-  Alert, ToastAndroid, Modal, Pressable, Image, ImageBackground
+  Image, ImageBackground
 } from 'react-native';
 import CustomButton from './Components/CustomButton';
+import Home from './Components/Home';
+import Second from './Components/Second';
 
 const App = () => {
+  const Stack = createNativeStackNavigator();
 
-  const [name, setName] = useState('')
-  const [age, setAge] = useState()
-  let [submitted, setSubmitted] = useState(false)
-  //Logic to toggle submitted props
-  const submit = () => {
-    if (name.length > 3)
-      setSubmitted(!submitted)
-    else {
-      setSubmitted(false)
-    }
-
-  }
   return (
-    <ImageBackground
-      style={styles.body}
-      source={{ uri: 'https://cdn.pixabay.com/photo/2016/11/05/12/38/fuzzy-1800136_960_720.jpg' }}
-    >
-      <Text style={styles.text}>Enter your name</Text>
-      <TextInput
-        style={styles.input}
-        placeholder='e.g. Rohit'
-        onChangeText={(value) => { setName(value) }}
-      />
-      <CustomButton submit={submit}
-        title={submitted ? 'Clear' : 'Submit'} />
-
-      {/* Since Button has very limited props we eill use othe alt  */}
-      {/* <TouchableOpacity
-        style={styles.button}
-        onPress={submit}
+    <NavigationContainer>
+      <Stack.Navigator
+      // this diables the back button on the navigation bar for all screen
+      // screenOptions={{
+      //   header: () => null
+      // }}
       >
-        <Text style={styles.button_text}>{submitted ? 'Clear' : 'Submit'}</Text>
-      </TouchableOpacity> */}
-
-      {
-        submitted === true ?
-          <>
-            <Text style={styles.subText}>You are verified as {name} </Text>
-            <Image style={styles.image} source={{ uri: 'https://cdn.pixabay.com/photo/2012/04/18/19/01/check-37583_960_720.png' }} />
-          </>
-          :
-          <>
-            <Text style={styles.subText}>Please enter atlest 3 characters</Text>
-            <Image style={styles.image} source={require('./assets/oops.png')} />
-          </>
-      }
-    </ImageBackground >
+        <Stack.Screen
+          name='Home'
+          component={Home}
+          // Disables header
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Second'
+          component={Second}
+          // Another way of disabling header
+          options={{ header: () => null }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
@@ -80,30 +56,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     margin: 10,
     textAlign: 'center'
-
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'black',
-    borderRadius: 5,
-    width: 260,
-    fontSize: 20,
-    textAlign: 'center',
-    marginBottom: 26,
-
   },
 
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#00000090'
-  },
-  image: {
-    height: 100,
-    width: 100,
-    marginTop: 20,
-  },
 });
 
 export default App;
