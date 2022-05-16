@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import {
   StyleSheet,
@@ -11,32 +11,32 @@ import {
 import CustomButton from './Components/CustomButton';
 import Home from './Components/Home';
 import Second from './Components/Second';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import FontAwsome5 from 'react-native-vector-icons/FontAwesome5';
 
 const App = () => {
-  const Stack = createNativeStackNavigator();
+  const Drawer = createDrawerNavigator();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-      // this diables the back button on the navigation bar for all screen
-      // screenOptions={{
-      //   header: () => null
-      // }}
+      <Drawer.Navigator
+
       >
-        <Stack.Screen
+
+        <Drawer.Screen
           name='Home'
           component={Home}
           // Disables header
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        <Drawer.Screen
           name='Second'
           component={Second}
           // Another way of disabling header
           options={{ header: () => null }}
         />
-      </Stack.Navigator>
-    </NavigationContainer>
+      </Drawer.Navigator>
+    </NavigationContainer >
   );
 };
 
